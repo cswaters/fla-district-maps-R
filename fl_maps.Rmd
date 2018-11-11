@@ -1,0 +1,48 @@
+---
+title: "Florida Districts Mapped"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+    theme: bootstrap
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(leaflet)
+library(sf)
+load('data/fl_congress.RData')
+```
+
+Column {data-width=500}
+-----------------------------------------------------------------------
+
+### Florida State Senate
+
+```{r}
+leaflet() %>% 
+  addProviderTiles("CartoDB.Positron") %>%
+  addPolygons(data = st_transform(fl_st_leg,crs = "+init=epsg:4326"),
+              fillColor = "white",
+              color = "black",
+              popup = ~NAMELSAD,
+              weight = 0.5)
+```
+
+Column {data-width=500}
+-----------------------------------------------------------------------
+
+### Florida State House
+
+```{r}
+
+leaflet() %>% 
+  addProviderTiles("CartoDB.Positron") %>%
+  addPolygons(data = st_transform(fl_st_house,crs = "+init=epsg:4326"),
+              fillColor = "white",
+              color = "black",
+              popup = ~NAMELSAD,
+              weight = 0.5)
+
+```
+
